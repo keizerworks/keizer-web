@@ -1,7 +1,7 @@
-name: '🐛 Bug'
+name: 'Bug'
 description: 'Submit a bug to help us improve'
-title: '🐛 Bug: '
-labels: ['type: bug']
+title: '[BUG]: '
+labels: [bug]
 body:
   - type: textarea
     id: description
@@ -27,13 +27,6 @@ body:
     attributes:
       label: 'Expected behavior'
       description: 'A clear and concise description of what you think should happen?'
-    validations:
-      required: true
-  - type: textarea
-    id: screenshots
-    attributes:
-      label: 'Screenshots/Videos'
-      description: 'Add screenshots/videos, if applicable.'
     validations:
       required: true
   - type: textarea
