@@ -5,72 +5,108 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { Sheet, SheetContent, SheetFooter, SheetTrigger } from "../ui/sheet";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Navbar() {
-  const navLinks = ["Product", "Development", "Design", "Marketing"];
-  const [isOpen, setIsOpen] = useState(false);
+  const navLinks: string[] = ["Product", "Development", "Design", "Marketing"];
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [scrolled, setScrolled] = useState<boolean>(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
-    <nav className="px-2 translate-y-4 rounded-xl max-w-7xl mx-auto top-0 z-[100] sticky flex items-center justify-between">
-      <div className="flex gap-2 items-center">
-        <Image
-          src={"/assets/logo.svg"}
-          alt="logo"
-          className=" object-cover translate-y-1"
-          width={50}
-          height={50}
-        />
-        <span className="font-semibold ">Keizer.</span>
-      </div>
-      <div className="md:hidden">
-        <Sheet open={isOpen} onOpenChange={setIsOpen}>
-          <SheetTrigger>
-            {!isOpen && (
-              <Button variant="ghost" size="icon" className="text-neutral-200">
+    <nav
+      className={`fixed w-full top-0 z-[100] px-4 sm:px-6 lg:px-8 transition-all duration-300 ${
+        scrolled
+          ? "py-4 bg-black/80 backdrop-blur-lg shadow-lg"
+          : "py-6 bg-transparent"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto flex items-center justify-between">
+        {/* Logo */}
+        <Link href="/" className="flex items-center gap-2 group">
+          <Image
+            src="/assets/logo.svg"
+            alt="logo"
+            className="w-10 h-10 object-contain group-hover:scale-110 transition-transform"
+            width={40}
+            height={40}
+          />
+          <span className="font-bold text-xl text-white tracking-tight group-hover:text-neutral-200">
+            Keizer<span className="text-blue-500">.</span>
+          </span>
+        </Link>
+
+        {/* Mobile Menu */}
+        <div className="md:hidden">
+          <Sheet open={isOpen} onOpenChange={setIsOpen}>
+            <SheetTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-white hover:bg-white/10"
+              >
                 <Menu className="h-6 w-6" />
               </Button>
-            )}
-          </SheetTrigger>
-          <SheetContent side="right" className="bg-black border-neutral-800">
-            <div className="flex flex-col gap-3 mt-12">
-              {navLinks.map((link) => (
-                <Link 
-                  key={link}
-                  href="/"
-                  className="text-neutral-400 hover:text-neutral-200 transition-colors duration-300 text-lg font-medium tracking-wide  py-2 rounded-lg"
-                  onClick={() => setIsOpen(false)}
+            </SheetTrigger>
+            <SheetContent
+              side="right"
+              className="bg-black/95 border-neutral-800 backdrop-blur-xl"
+            >
+              <div className="flex flex-col gap-6 mt-12">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link}
+                    href={`/${link.toLowerCase()}`}
+                    className="text-neutral-300 hover:text-white transition-colors duration-300 text-2xl font-medium tracking-wide py-2"
+                    onClick={() => {
+                      setIsOpen(false);
+                    }}
+                  >
+                    {link}
+                  </Link>
+                ))}
+              </div>
+              <SheetFooter className="mt-12">
+                <Button className="w-full py-6 text-lg font-semibold bg-white hover:bg-neutral-200 text-black rounded-full transition-colors duration-300">
+                  Get Started
+                </Button>
+              </SheetFooter>
+            </SheetContent>
+          </Sheet>
+        </div>
+
+        {/* Desktop Menu */}
+        <div className="hidden md:flex items-center gap-8">
+          <ul className="flex items-center gap-8">
+            {navLinks.map((link) => (
+              <li key={link}>
+                <Link
+                  href={`/${link.toLowerCase()}`}
+                  className="text-neutral-300 hover:text-white transition-all duration-300 text-md font-medium relative group"
                 >
                   {link}
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full" />
                 </Link>
-              ))}
-            </div>
-            <SheetFooter className="mt-12">
-              <Link href="/">
-                <Button className="w-full py-6 text-lg font-semibold tracking-wide  bg-neutral-200 text-black rounded-full">
-                  Get started
-                </Button>
-              </Link>
-            </SheetFooter>
-          </SheetContent>
-        </Sheet>
+              </li>
+            ))}
+          </ul>
+          <Button
+            className="px-6 py-2.5 ml-4 bg-white hover:bg-neutral-200 text-black rounded-full font-semibold text-sm transition-all duration-300 hover:shadow-lg hover:scale-105"
+          >
+            Get Started
+          </Button>
+        </div>
       </div>
-
-      <ul className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center border border-neutral-800 gap-4 px-4 py-2 backdrop-blur-md bg-neutral-800/80 rounded-full">
-        {navLinks.map((link) => {
-          return (
-            <li
-              key={link} 
-              className="text-neutral hover:text-neutral-400 transition-all"
-            >
-              <Link href={`${link}`}>{link}</Link>
-            </li>
-          );
-        })}
-      </ul>
-      <button className=" hidden md:block px-4 py-1 glow-btn duration-500 transition-all bg-neutral-200 text-black rounded-full font-[550]">
-        Get started
-      </button>
     </nav>
   );
 }

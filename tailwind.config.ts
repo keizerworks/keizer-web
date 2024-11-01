@@ -10,6 +10,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sora: ['var(--font-sora)', 'sans-serif'],
+      },
       perspective: {
         "1000": "1000px",
       },
