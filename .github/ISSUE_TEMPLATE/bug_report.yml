@@ -1,0 +1,68 @@
+name: '🐛 Bug'
+description: 'Submit a bug to help us improve'
+title: '🐛 Bug: '
+labels: ['type: bug']
+body:
+  - type: textarea
+    id: description
+    validations:
+      required: true
+    attributes:
+      label: 'Description'
+      description: 'A clear and concise description of what the bug is.'
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: 'Reproduction steps'
+      description: 'Steps to reproduce the behaviour'
+      placeholder: |
+        1. Go to'...'
+        2. Click on'...'
+        3. Scroll down to'...'
+        4. See error
+    validations:
+      required: true
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: 'Expected behavior'
+      description: 'A clear and concise description of what you think should happen?'
+    validations:
+      required: true
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: 'Screenshots/Videos'
+      description: 'Add screenshots/videos, if applicable.'
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Device Information [optional]
+      description: |
+        examples:
+          - **OS**: Ubuntu 20.04
+          - **Browser**: chrome
+          - **version**: 22
+      value: |
+        - OS:
+        - Browser:
+        - version:
+      render: markdown
+    validations: 
+      required: false
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: 'Provide any additional context for the Bug.'
+      description: 'Add any other context about the problem here.'
+    validations:
+      required: false
+  - type: dropdown
+    attributes:
+      label: Are you willing to submit PR?
+      options:
+        - 'Yes'
+        - 'No'
+    validations: 
+      required: false
