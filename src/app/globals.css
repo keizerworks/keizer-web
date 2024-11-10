@@ -7,25 +7,9 @@ body {
   background-color: rgb(26, 26, 26);
 }
 
-::-webkit-scrollbar {
-  width: 0px;
-}
-
-::selection {
-  background-color: white;
-  color: black;
-}
-.dot-grid {
-  inset: 0;
-  height: 100%;
-  width: 100%;
-  background-image: linear-gradient(to right, #80808012 1px, transparent 1px),
-    linear-gradient(to bottom, #80808012 1px, transparent 1px);
-  background-size: 24px 24px;
-}
 @layer base {
   :root {
-    color: black;
+    
     --background: 0 0% 100%;
     --foreground: 0 0% 3.9%;
     --card: 0 0% 100%;
@@ -53,7 +37,6 @@ body {
     --radius: 0.5rem;
   }
   .dark {
-    color: white;
     --background: 0 0% 3.9%;
     --foreground: 0 0% 98%;
     --card: 0 0% 3.9%;
