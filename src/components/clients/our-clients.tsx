@@ -64,20 +64,6 @@ const ClientSection = () => {
             </div>
           </div>
         </div>
-
-``        <div className="grid grid-cols-2 md:grid-cols-6 gap-6 md:gap-8">
-          {clients.map((client) => (
-            <div key={client.id} className="flex items-center justify-center">
-              <Image
-                src={client.logoPath}
-                alt={`${client.name} logo`}
-                width={120}
-                height={40}
-                className="object-contain w-full max-w-[120px]"
-              />
-            </div>
-          ))}
-        </div>
       </div>
     </div>
   );
